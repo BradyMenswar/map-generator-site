@@ -1,7 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Tile, TileState } from '../tile';
 import { Location } from '../location';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -10,7 +9,7 @@ import { map } from 'rxjs';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
-export class MapComponent {
+export class MapComponent implements AfterViewInit {
   @ViewChild('map') mapCanvas!: ElementRef<HTMLCanvasElement>;
   tileSize = 8;
   mapSize = 100;
@@ -34,7 +33,7 @@ export class MapComponent {
   }
 
   initializeMap(mapSize: number) {
-    let map: Tile[][] = [];
+    const map: Tile[][] = [];
     for (let row = 0; row < mapSize; row++) {
       map.push([]);
       for (let col = 0; col < mapSize; col++) {
@@ -60,7 +59,7 @@ export class MapComponent {
     mapArray: Tile[][]
   ) {
     for (let iteration = 0; iteration < walkerCount; iteration++) {
-      let currentLocation = new Location(mapSize / 2, mapSize / 2);
+      const currentLocation = new Location(mapSize / 2, mapSize / 2);
       let direction;
       for (let step = 0; step < walkerSteps; step++) {
         direction = this.chooseDirection();
