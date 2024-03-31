@@ -1,18 +1,19 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Tile, TileState } from '../tile';
 import { Location } from '../location';
+import { Controls, ControlsComponent } from './controls/controls.component';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [],
+  imports: [ControlsComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
 export class MapComponent implements AfterViewInit {
   @ViewChild('map') mapCanvas!: ElementRef<HTMLCanvasElement>;
-  tileSize = 8;
-  mapSize = 100;
+  tileSize = 2;
+  mapSize = 500;
 
   private canvasContext!: CanvasRenderingContext2D;
   private walkerCount = 10;
@@ -24,12 +25,6 @@ export class MapComponent implements AfterViewInit {
     if (context) {
       this.canvasContext = context;
     }
-
-    const currentMap = this.initializeMap(this.mapSize);
-    this.walk(this.walkerCount, this.walkerSteps, this.mapSize, currentMap);
-    this.cleanInside(this.cleanIterations, currentMap);
-    this.calculateWalls(currentMap);
-    this.drawGrid(this.tileSize, currentMap);
   }
 
   initializeMap(mapSize: number) {
@@ -98,9 +93,9 @@ export class MapComponent implements AfterViewInit {
               [0, 1],
               [0, -1],
             ];
-            directions.forEach(([dRow, dCol]) => {
-              const newRow = row + dRow;
-              const newCol = col + dCol;
+            directions.forEach(([directionX, directionY]) => {
+              const newRow = row + directionX;
+              const newCol = col + directionY;
               if (
                 newRow < 0 ||
                 newRow >= mapArray.length ||
@@ -131,9 +126,9 @@ export class MapComponent implements AfterViewInit {
             [0, 1],
             [0, -1],
           ];
-          directions.forEach(([dRow, dCol]) => {
-            const newRow = row + dRow;
-            const newCol = col + dCol;
+          directions.forEach(([directionX, directionY]) => {
+            const newRow = row + directionX;
+            const newCol = col + directionY;
             if (
               newRow >= 0 &&
               newRow < mapArray.length &&
@@ -176,5 +171,15 @@ export class MapComponent implements AfterViewInit {
         );
       }
     }
+  }
+
+  onControlsUpdate(controls: Controls) {
+    this.walkerCount = controls.walkerCount;
+    this.walkerSteps = controls.walkerSteps;
+    this.cleanIterations = controls.cleanIterations;
+    this.mapSize = controls.mapSize;
+    this.tileSize = controls.tileSize;
+
+    this.regenerateMap();
   }
 }

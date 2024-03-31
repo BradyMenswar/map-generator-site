@@ -1,0 +1,31 @@
+<form [formGroup]="controlsForm" (submit)="emitControlUpdate()">
+  <div class="flex flex-col w-1/2 items-start p-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Walker Count</mat-label>
+      <input type="number" matInput formControlName="walkerCount" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Walker Steps</mat-label>
+      <input type="number" matInput formControlName="walkerSteps" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Clean Iterations</mat-label>
+      <input type="number" matInput formControlName="cleanIterations" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Map Size</mat-label>
+      <input type="number" matInput formControlName="mapSize" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tile Size</mat-label>
+      <input type="number" matInput formControlName="tileSize" />
+    </mat-form-field>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="controlsForm.invalid">
+      Generate
+    </button>
+  </div>
+</form>

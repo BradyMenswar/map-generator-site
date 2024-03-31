@@ -1,6 +1,8 @@
-<canvas
-  #map
-  [width]="mapSize * tileSize"
-  [height]="mapSize * tileSize"
-  style="border: 1px solid #000000"></canvas>
-<button (click)="regenerateMap()">Reset</button>
+<div class="flex gap-2">
+  <app-controls (controlsUpdate)="onControlsUpdate($event)"></app-controls>
+  <canvas
+    #map
+    [width]="mapSize * tileSize"
+    [height]="mapSize * tileSize"
+    style="border: 1px solid #000000"></canvas>
+</div>
