@@ -1,5 +1,7 @@
 <div class="flex gap-2">
-  <app-controls (controlsUpdate)="onControlsUpdate($event)"></app-controls>
+  <app-controls
+    (controlsUpdate)="onControlsUpdate($event)"
+    (shadeUpdate)="onShadeUpdate($event)"></app-controls>
   <canvas
     #map
     [width]="mapSize * tileSize"
